@@ -1,0 +1,18 @@
+#delete_rdf form {
+    float: left;
+}
+#delete_rdf input.form_submit {
+    margin: 0px; 10px;
+}
+#delete_rdf #no_delete {
+    float: left;
+    /*margin: 26px 0px 0px 10px;*/
+}
+
+#delete_rdf div.input_submit_wrapper {
+	margin: 0;
+}
+
+#delete_rdf #btn_no_delete {
+	margin-top: 24px;
+}

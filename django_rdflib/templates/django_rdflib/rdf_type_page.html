@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+
+{% load file_timestamp %}
+{% load objects_tags %}
+{% load pagination_tags %}
+
+{% block pagecss %}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}{% file_timestamp "app/django_rdflib/css/all_rdf_page.css" %}">
+{% endblock %}
+
+{% block page_title %} 
+    "{{ site_ns_type }}" Objects List
+{% endblock %}
+
+{% block content %}
+    <h2>{{ site_ns_type }} <span>- {{ rdf_obj_count }}</span></h2>
+
+    {% autopaginate sorted_dict_vals 20 %}
+    {% for key in sorted_dict_vals %}
+        <div id="all_rdf_wrapper left">
+            <a href="{{ all_objects_dict|get_val:key }}">{{ key }}</a>
+        </div>
+    {% endfor %}
+
+    <div class="pagination_bottom small_text left">
+        {% paginate %}
+    </div>
+    <br />
+    <br />
+    [ <a href="{% url add_rdf_object site_ns_type %}">new "{{ site_ns_type }}" object</a> ]
+    <br />
+    <br />
+{% endblock content %}

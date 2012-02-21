@@ -1,0 +1,15 @@
+{% extends "misc/form_base.html" %}
+{% block form_fields %}
+	{% load form_field %}
+	{% for field in form %}
+        {% ifequal field.field.widget.attrs.class 'hide' %}
+            <div class="hidden">
+        {% endifequal %}
+
+        {% form_field 'django_rdflib/change_form_field.html' %}
+
+        {% ifequal field.field.widget.attrs.class 'hide' %}
+            </div>
+        {% endifequal %}
+    {% endfor %}
+{% endblock form_fields %}

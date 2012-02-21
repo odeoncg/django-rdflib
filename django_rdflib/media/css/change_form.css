@@ -1,0 +1,29 @@
+.hidden .form_field_wrapper {
+    padding-left: 200px;
+}
+.hidden .form_field_wrapper .form_field textarea {
+    width: 189px;
+}
+
+div#sidebox_rdf {
+	padding: 20px 0;
+}
+
+div#sidebox_rdf tr {
+	border-bottom: 0.5px dotted #ACACAC;
+}
+
+span.rdf_repr_subject {
+	color: #EC6B00;
+}
+
+span.rdf_repr_object,
+span.rdf_repr_object textarea {
+	color: #747A80;
+}
+
+textarea.rdf_repr_object_textarea {
+	height: 110px;
+	overflow: auto;
+    width: 335px;
+}

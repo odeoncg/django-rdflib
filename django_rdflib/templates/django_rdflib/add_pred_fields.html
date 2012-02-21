@@ -1,0 +1,6 @@
+{% extends 'misc/form.html' %}
+
+{% block form_fields %}
+	{{ block.super }}
+	<input type="hidden" id="form_count" name="form_count" value="1">
+{% endblock form_fields %}

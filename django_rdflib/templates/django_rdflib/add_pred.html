@@ -1,0 +1,100 @@
+{% extends "site_base.html" %}
+
+{% load file_timestamp %}
+{% load display_helpers %}
+{% load form %}
+
+{% block brain_part %}active{% endblock %}
+
+{% block page_title %} 
+    {% if subject %}Edit{% else %}Add{% endif %} {{ page_title|capfirst }}
+{% endblock %}
+
+{% block pagecss %}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}{% file_timestamp "css/jquery.treeview.css" %}">
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}{% file_timestamp "app/brain_parts/css/custom.css" %}">
+{% endblock %}
+
+{% block pagejs %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}{% file_timestamp "app/brain_parts/js/bpedit.js" %}"> </script>
+    <script type="text/javascript">
+
+        function loadRdfObjects(el) {
+            if (el.value == ""){
+                return false
+            }
+            var el_prefix = $(el).attr('id').replace('id_', '').replace('-value_type', '');
+            $('#form_field_value .form_field #id_' + el_prefix + '-value').html('Loading...');
+            if (el.value != 'text'){
+                $('#form_field_value .form_field #id_' + el_prefix + '-value').parent().load("/rdf/" + el.value + "/rdf_type_choices/?prefix=" + el_prefix);
+            } else {
+                $('#form_field_value .form_field #id_' + el_prefix + '-value').parent().html('<textarea name="' + el_prefix + '-value" id="id_' + el_prefix + '-value"></textarea>');
+                $('textarea:not(.wysiwyg)').elastic()
+            }
+        }
+
+        function addAnotherForm() {
+            $('#form_count').val(parseInt($('#form_count').val()) + parseInt(1));
+            $.get('{% url add_pred_form site_ns_type name_slug %}', {'prefix': $('#form_count').val()}, function(data) {
+                $('#brain_part_form form .form_field_wrapper:last').after(data);
+            });
+        }
+    </script>
+
+{% endblock %}
+
+{% block header_container %}
+    {% if not is_popup %}
+        {{ block.super }}
+    {% endif %}
+{% endblock header_container %}
+
+{% block menu %}
+    {% if not is_popup %}
+        {{ block.super }}
+    {% endif %}
+{% endblock menu %}
+
+{% block content %}
+    <h2>
+        {% if subject %}Edit{% else %}Add{% endif %} {{ page_title|capfirst }}
+    </h2>
+    <div id="brain_part">
+        {% if not is_popup %}
+            <div class="col1">
+        {% else %}
+            <div class="popup_col">
+        {% endif %}
+            <div id="brain_part_form">
+                {% form '' 'Submit' 'post' 'django_rdflib/add_pred_fields.html' %}
+            </div>
+            <a id="add_another" class="add-another" href="javascript:void(0);" onclick="return addAnotherForm()"><img width="10" height="10" alt="Add Another" src="/media-admin/img/admin/icon_addlink.gif">Add Another</a>
+        </div>
+        {% if subject and not is_popup%}
+            <div class="col2">
+                <div id="sidebox">
+                    <div class="header">Actions</div>
+                    <div class="content">
+                        <table>
+                            <tr>
+                                <td><a href="{% url add_rdf_object site_ns_type %}">New {{ page_title|capfirst }}</a></td>
+                            <tr>
+                            </tr>
+                                <td><a href="{% url delete_rdf site_ns_type name_slug %}">Delete {{ page_title|capfirst }}</a></td>
+                            </tr>
+                            </tr>
+                                <td><a id="add_new_predicate" href="{% url add_pred site_ns_type name_slug %}">Add New Field</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% if not is_popup %}
+        {{ block.super }}
+    {% endif %}
+{% endblock footer %}

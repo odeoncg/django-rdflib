@@ -1,0 +1,31 @@
+.pagination_bottom {
+	padding: 15px 0;
+}
+
+.pagination {
+	padding: 5px 0 5px 0;
+}
+
+h2 span {
+	color: #EC6B00;
+}
+
+a.delete_rdf_type_link {
+	color: #EB4814;
+}
+
+div.rdf_type_name_and_count {
+	float: left;
+}
+
+div.rdf_type_details_and_actions {
+	float: right;
+}
+
+div#all_rdf_wrapper {
+	padding: 10px 0;
+}
+
+div#all_rdf_wrapper.bordered {
+	border-bottom: 0.5px dotted #ACACAC;
+}

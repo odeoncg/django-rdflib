@@ -1,0 +1,5 @@
+DEPENDENCIES:
+- south ( http://south.aeracode.org/ )
+- django-fts-odeon ( http://github.com/odeoncg/django-fts-odeon )
+
+

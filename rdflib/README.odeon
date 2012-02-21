@@ -1,0 +1,7 @@
+new features:
+- multi-line literals in SPARQL (delimited by """)
+- graph.removeN(quads) where "quads" is a list of quads (lists or tuples) - executes a single DELETE query and the speed is optimal for around 100 quads removed in a row
+- don't escape quotes when normalizing literals (DB-API takes care of the escaping when building the SQL)
+
+dependencies:
+- pyparsing for the SPARQL parser
