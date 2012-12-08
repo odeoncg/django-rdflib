@@ -24,6 +24,8 @@ class PostgreSQL(SQL):
 
         self.INDEX_NS_BINDS_TABLE = \
           'CREATE INDEX uri_index on %s_namespace_binds (uri)'
+        self._original_executeSQL = self.executeSQL
+        self.executeSQL = self._new_executeSQL
 
     def _connect(self, db=None):
         return connection
@@ -33,4 +35,8 @@ class PostgreSQL(SQL):
 
     def rollback(self):
         transaction.rollback_unless_managed()
+
+    def _new_executeSQL(self,cursor,qStr,params=None,paramList=False):
+        cursor.execute('SET ENABLE_NESTLOOP TO FALSE')
+        self._original_executeSQL(cursor,qStr,params,paramList)
 
