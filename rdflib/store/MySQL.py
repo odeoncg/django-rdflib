@@ -714,7 +714,8 @@ class SQL(Store):
         elif paramList:
             cursor.executemany(qStr,[tuple(item) for item in params])
         else:
-            cursor.execute(qStr,tuple(params))
+            #cursor.execute(qStr,tuple(params))
+            cursor.execute(qStr,params)
 
     def note_modified(self):
         """Indicate that the triples in this store have been modified.  This

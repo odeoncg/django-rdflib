@@ -18,6 +18,8 @@ class PostgreSQL(SQL):
         self.defaultDB = 'template1'
         self.default_port = 5432
         self.can_cast_bigint = True
+        #if configuration is not None:
+            #self._set_connection_parameters(configuration=configuration)
         self.select_modifier = ''
         
         self.enableCache = False
@@ -36,7 +38,11 @@ class PostgreSQL(SQL):
     def rollback(self):
         transaction.rollback_unless_managed()
 
-    def _new_executeSQL(self,cursor,qStr,params=None,paramList=False):
-        cursor.execute('SET ENABLE_NESTLOOP TO FALSE')
-        self._original_executeSQL(cursor,qStr,params,paramList)
+    def _new_executeSQL(self, cursor, qStr, params=None, paramList=False):
+        new_cursor = connection.cursor()
+        new_cursor.execute('SET ENABLE_NESTLOOP TO FALSE')
+        new_cursor.execute('SET ENABLE_SEQSCAN TO FALSE')
+        self._original_executeSQL(cursor, qStr, params, paramList)
+        new_cursor.execute('SET ENABLE_NESTLOOP TO TRUE')
+        new_cursor.execute('SET ENABLE_SEQSCAN TO TRUE')
 

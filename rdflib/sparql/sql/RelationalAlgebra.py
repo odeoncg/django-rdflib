@@ -122,7 +122,8 @@ def TopEvaluate(query,
 def ExecuteSqlQuery(graph, sql, params, columns, queryInfo, sqlBuilder):
     startTime = time.time()
     cursor = graph.store._db.cursor()
-    rc = cursor.execute(sql, params)
+    #rc = cursor.execute(sql, params)
+    graph.store.executeSQL(cursor, sql, params)
     queryInfo['elapsed'] = time.time()-startTime
     if sqlBuilder.isAsk:
         for r in cursor.fetchall()[0]:
