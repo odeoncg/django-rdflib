@@ -1,5 +1,6 @@
 DEPENDENCIES:
 - south ( http://south.aeracode.org/ )
+- pyparsing ( http://pyparsing.wikispaces.com/ )
 - django-fts-odeon ( http://github.com/odeoncg/django-fts-odeon )
 
 
